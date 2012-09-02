@@ -131,7 +131,7 @@ if ($result) {
 
     $custom_fields = new w2p_Core_CustomFields($m, 'addedit', $obj->task_id, 'edit');
     $custom_fields->bind($_POST);
-    $sql = $custom_fields->store($obj->task_id); // Store Custom Fields
+    $custom_fields->store($obj->task_id); // Store Custom Fields
 
     // Now add any task reminders
     // If there wasn't a task, but there is one now, and
@@ -147,10 +147,6 @@ if ($result) {
 
     if (isset($hdependencies)) {
         // there are dependencies set!
-
-        // backup initial start and end dates
-        $tsd = new w2p_Utilities_Date($obj->task_start_date, w2PgetConfig('system_timezone', 'Europe/London'));
-        $ted = new w2p_Utilities_Date($obj->task_end_date, w2PgetConfig('system_timezone', 'Europe/London'));
 
         // updating the table recording the
         // dependency relations with this task
@@ -179,8 +175,6 @@ if ($result) {
                 // appropriately calculated end date via start+duration
                 $ned->addDuration($obj->task_duration, $obj->task_duration_type);
             } else {
-                // calc task time span start - end
-                //$d = $tsd->calcDuration($ted);
                 $d = $obj->task_duration;
                 // Re-add (keep) task time span for end date.
                 // This is independent from $obj->task_duration.
