@@ -57,7 +57,7 @@ class CTask extends w2p_Core_BaseObject
     public $task_access = null;
     public $task_order = null;
     public $task_client_publish = null;
-    public $task_dynamic = null;
+
     public $task_notify = null;
     public $task_departments = null;
     public $task_contacts = null;
@@ -76,6 +76,7 @@ class CTask extends w2p_Core_BaseObject
      * 21 = FEATURE, dep tracking, others do not track
      * 31 = ON, dep tracking, others do track
      */
+    public $task_dynamic = null;
 
     /**
      * When calculating a task's start date only consider
@@ -481,9 +482,10 @@ class CTask extends w2p_Core_BaseObject
 
         if ($destTask_id == 0) {
             $newObj->task_parent = $newObj->task_id;
-        } else
-        if ($destTask_id > 0) {
-            $newObj->task_parent = $destTask_id;
+        } else {
+            if ($destTask_id > 0) {
+                $newObj->task_parent = $destTask_id;
+            }
         }
 
         if ($newObj->task_parent == $this->task_id) {
